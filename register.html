@@ -15,42 +15,43 @@
 	<div class="login-page">
 		<div class="form">
 			<div class="header">
-				<h2>Course Update</h2>
+				<h2>NO LMS ACCOUNT</h2>
 			</div>
 			<form id="test-form">
 
 				<div class="form-control">
-					<input type="text"	id="username" name ="username" placeholder="USERNAME" autocomplete="OFF"/>
+					<input type="text"	id="firstname" name ="firstname" placeholder="Enter First Name" autocomplete="OFF"/>
 					<i class="fas fa-check-circle"></i>
 					<i class="fas fa-exclamation-circle">	</i>
-					<small class="usernameError"></small>
+					<small class=""></small>
 				</div>
 
 				<div class="form-control">
-					<input type="text" id="subject" name ="subject" placeholder="SUBJECT" autocomplete="OFF"/>
+					<input type="text" id="lastname" name ="lastname" placeholder="Enter Last Name" autocomplete="OFF"/>
 					<i class="fas fa-check-circle"></i>
 					<i class="fas fa-exclamation-circle">	</i>
-					<small class="subjectError">Hello</small>
+					<small class=""></small>
 				</div>
 
 				<div class="form-control">
-					<input type="text"	id="edpcode" name ="edpcode" placeholder="EDP CODE" pattern="^[0-9]*$" autocomplete="OFF"/>
+					<input type="text"	id="idnumber" name ="idnumber" placeholder="Enter ID Number" pattern="^[0-9]*$" autocomplete="OFF"/>
 					<i class="fas fa-check-circle"></i>
 					<i class="fas fa-exclamation-circle">	</i>
-					<small class="edpcodeError"></small>
+					<small class=""></small>
 				</div>
 				
 				<div class="form-control">
-					<input type="text"	id="remarks" name ="remarks" placeholder="REMARKS" autocomplete="OFF"/>
+					<input type="text"	id="email" name ="email" placeholder="Enter Email Address" autocomplete="OFF"/>
 					<i class="fas fa-check-circle"></i>
 					<i class="fas fa-exclamation-circle">	</i>
-					<small class="errorRemars">Error Message</small>
+					<small class=""></small>
 				</div>
+				
       
         <button type="submit" id="submit-form">Submit</button>
 			</form>
 		
-			<p><a href="register.html">No LMS Account?</a></p>
+			<p><a href="index.html">Missing Courses ?</a></p>
 			
 		</div>
 		
@@ -58,60 +59,54 @@
 	<script>
 		$(document).ready(function(){
 			const form = document.getElementById('form');
-			const username = document.getElementById('username');
-			const subject = document.getElementById('subject');
-			const edpcode = document.getElementById('edpcode');
-			const remarks = document.getElementById('remarks');
+			const firstname = document.getElementById('firstname');
+			const lastname = document.getElementById('lastname');
+			const idnumber = document.getElementById('idnumber');
+			const email = document.getElementById('email');
 			
-			function checkUsername(){
-				var usernameVal = username.value.trim();
-				if(usernameVal === '') {
-					setErrorFor(username, 'Username cannot be blank');
-				} else if( usernameVal.length != 12 || usernameVal.length <= 8) {
-					setErrorFor(username, 'must be UCB-IDNUMBER');		
+			function checkFirstname(){
+				var firstnameVal = firstname.value.trim();
+				if(firstnameVal === '') {
+					setErrorFor(firstname, 'Firstname cannot be blank');
 				} else {
-					setSuccessFor(username);
+					setSuccessFor(firstname);
 				}
 			}
 
-			function checkSubject(){
-				var subjectVal = subject.value.trim();
-				if(subjectVal === '') {
-					setErrorFor(subject, 'Subject cannot be blank');
-				} else if (subjectVal.length > 15 || subjectVal.length < 3 ) {
-					setErrorFor(subject, 'must be Subject Code');		
+			function checkLastname(){
+				var lastnameVal = lastname.value.trim();
+				if(lastnameVal === '') {
+					setErrorFor(lastname, 'Lastname cannot be blank');
 				} else {
-					setSuccessFor(subject);
+					setSuccessFor(lastname);
 				}
 			}
 
-			function checkEdpcode(){
-				var edpcodeVal = edpcode.value.trim();
-				if(edpcodeVal === '') {
-					setErrorFor(edpcode, 'EDP Code cannot be blank');
-				} else if (edpcodeVal.length != 5 || isNaN(edpcodeVal)) {
-					setErrorFor(edpcode, 'must be EDP Code');		
+			function checkIdnumber(){
+				var idnumberVal = idnumber.value.trim();
+				if(idnumberVal === '') {
+					setErrorFor(idnumber, 'ID Number cannot be blank');
+				} else if (idnumberVal.length != 8 || isNaN(idnumberVal)) {
+					setErrorFor(idnumber, 'ID Number must be 8 digits');		
 				} else {
-					setSuccessFor(edpcode);
+					setSuccessFor(idnumber);
 				}
 			}
 
-			function checkRemarks(){
+			function checkEmail(){
 				// trim to remove the whitespaces
-				const remarksVal = remarks.value.trim();	
-				console.log(remarksVal)		
-				if(remarksVal === '') {
-					setErrorFor(remarks, 'Remarks should be ADD or REMOVE');
-				} else if (remarks.value != "ADD" && remarksVal != "REMOVE") {
-					setErrorFor(remarks, 'must be ADD or REMOVE');		
-				} else {
-					setSuccessFor(remarks);
+				const emailVal = email.value.trim();	
+				if(emailVal === '') {
+					setErrorFor(email, 'Email cannot be blank');
+				}else if (!isEmail(emailVal)) {
+					setErrorFor(email, 'Not a valid email');
+				}else {
+					setSuccessFor(email);
 				}
 			}
 
 			function setErrorFor(input, message) {
 				const formControl = input.parentElement;
-				console.log(formControl)
 				const small = formControl.querySelector('small');
 				formControl.className = 'form-control error';
 				small.innerText = message;
@@ -120,6 +115,10 @@
 			function setSuccessFor(input) {
 				const formControl = input.parentElement;
 				formControl.className = 'form-control success';
+			}
+
+			function isEmail(email) {
+				return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
 			}
 
     	$.fn.serializeObject = function(){
@@ -138,26 +137,26 @@
           return o;
 			};
 			
-				$("#username").keyup(function(){
-					checkUsername();
+				$("#firstname").keyup(function(){
+					checkFirstname();
 				})
-				$("#subject").keyup(function(){
-					checkSubject();
+				$("#lastname").keyup(function(){
+					checkLastname();
 				})
-				$("#edpcode").keyup(function(){
-					checkEdpcode();
+				$("#idnumber").keyup(function(){
+					checkIdnumber();
 				})
-				$("#remarks").keyup(function(){
-					checkRemarks();
+				$("#email").keyup(function(){
+					checkEmail();
 				})
 
       var $form = $('form#test-form'),
-       url = 'https://script.google.com/macros/s/AKfycbxmVTiABiuUDshMjmkrUszuuNu64HNmLX6C7fu2mTgwp10Pwwo/exec';
+       url = 'https://script.google.com/macros/s/AKfycbwjJVtGiORbxmUV7KStX_H4QS_uQTHyCLO3bANdKNtIBwEGrSph/exec';
       $('#submit-form').on('click', function(e) {
 				// this code prevents form from actually being submitted
 				e.preventDefault();
 
-				if ($.trim($("#username").val()) === "" || $.trim($("#subject").val()) === "" || $.trim($("#edpcode").val()) === "" || $.trim($("#remarks").val()) === "") {
+				if ($.trim($("#firstname").val()) === "" || $.trim($("#lastname").val()) === "" || $.trim($("#idnumber").val()) === "" || $.trim($("#email").val()) === "") {
 
         	alert('You did not fill out one of the fields.');
 					return false;
